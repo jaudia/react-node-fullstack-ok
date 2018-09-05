@@ -13,23 +13,23 @@ class App extends Component {
 
 
     peticionGet = () => {
+        this.obtener();
+        console.log(this.state.misdatos);
+    }
+
+    async obtener() {
         let pruebas = this.state.misdatos;
         pruebas.push("Texto desde react");
 
-        axios.get('/api/hello')
+
+        await axios.get('/api/hello')
             .then(function (response) {
                 pruebas.push(response.data.parametro);
-
             })
             .catch(function (error) {
                 console.log(error);
             });
-        this.setState({
-            misdatos: pruebas
-        });
-        console.log(this.state.misdatos);
-
-
+        this.setState({misdatos: pruebas})
     }
 
 
@@ -43,12 +43,10 @@ class App extends Component {
                 <p>parrafo desde react.</p>
                 <p className="App-intro">{this.state.response}</p>
                 <input type="button" value="obtener" onClick={this.peticionGet}/>
-
                 {
                     this.state.misdatos.map(function (item) {
                         return (<p key={item.length}>{item}</p>);
-                    })
-                }
+                    })}
             </div>
         );
 
